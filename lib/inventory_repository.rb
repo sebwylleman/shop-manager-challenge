@@ -16,4 +16,8 @@ class InventoryRepository
 
         return inventory
     end
+
+    def create(product)
+        
+    end
 end
