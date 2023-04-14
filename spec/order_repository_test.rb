@@ -6,7 +6,7 @@ def reset_orders_table
     connection = PG.connect({ host: '127.0.0.1', dbname: 'shop_manager_test' })
     connection.exec(seed_sql)
 end
-  
+   
 RSpec.describe OrderRepository do
     before(:each) do 
         reset_orders_table
@@ -19,6 +19,22 @@ RSpec.describe OrderRepository do
             orders = repo.all
             expect(orders.first.customer).to eq 'John Smith'
             expect(orders.last.date).to eq '2023-05-22'
+            expect(orders.length).to eq 2
+
+        end
+    end
+
+    describe '#create' do
+        it 'creates and adds an order to the table' do
+            new_order = Order.new
+            new_order.customer = 'Jess Henderson'
+            new_order.date = '2023-05-24'
+            new_order.item_id = 1
+
+            OrderRepository.create(new_order)
+            orders = repo.all
+            expect(orders.length).to eq 3
+            expect(orders.last.item_id).to eq '1'
         end
     end
 end

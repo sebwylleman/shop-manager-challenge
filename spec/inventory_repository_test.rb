@@ -36,7 +36,5 @@ RSpec.describe InventoryRepository do
             expect(inventory.length).to eq 3
         end
     end
-
-
 end
 

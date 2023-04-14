@@ -17,4 +17,8 @@ class OrderRepository
 
         return orders
     end
+
+    def create(order)
+
+    end
 end
