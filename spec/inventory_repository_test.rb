@@ -27,12 +27,12 @@ RSpec.describe InventoryRepository do
         it 'creates and adds a new product to the inventory' do
             product = Inventory.new
             product.item = 'office chair'
-            product.price = 55 # need to convert to '55'?
+            product.price = 55 
             product.quantity = 10
             new_inventory = repo.create(product)
             inventory = repo.all
             expect(inventory.last.item).to eq 'office chair'
-            expect(inventory.last.price).to eq 55
+            expect(inventory.last.price).to eq '55'
             expect(inventory.length).to eq 3
         end
     end

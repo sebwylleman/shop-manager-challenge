@@ -5,6 +5,7 @@ class InventoryRepository
     def all
         sql = 'SELECT * FROM inventory;'
         result_set = DatabaseConnection.exec_params(sql,[])
+
         inventory = []
         result_set.each do |field|
             stock = Inventory.new
@@ -18,6 +19,10 @@ class InventoryRepository
     end
 
     def create(product)
-        
+        sql = 'INSERT INTO inventory (item, price, quantity) VALUES ($1, $2, $3);'
+        params = [product.item, product.price, product.quantity] 
+        result_set = DatabaseConnection.exec_params(sql, params)
+
+        return nil
     end
 end
