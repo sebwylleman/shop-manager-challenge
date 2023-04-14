@@ -31,7 +31,7 @@ RSpec.describe OrderRepository do
             new_order.date = '2023-05-24'
             new_order.item_id = 1
 
-            OrderRepository.create(new_order)
+            repo.create(new_order)
             orders = repo.all
             expect(orders.length).to eq 3
             expect(orders.last.item_id).to eq '1'
