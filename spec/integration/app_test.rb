@@ -17,11 +17,23 @@ RSpec.describe Application do
         reset_all_tables
     end
 
-    it 'lists all inventory items' do
-        DatabaseConnection.connect('shop_manager_test')
-        expect(io).to receive(:gets).and_return("1").ordered
-        expect(io).to receive(:puts).with("Here's a list of all shop items:").ordered
-        expect(io).to receive(:puts).with("#1 printer - unit price: 60 - Quantity: 8")
-        expect(io).to receive(:puts).with("#2 mouse - unit price: 30 - Quantity: 12")
+    def print_menu
+        expect(io).to receive(:puts).with("Welcome to the shop management program!").ordered
+        expect(io).to receive(:puts).with("Enter your choice: ").ordered
+        expect(io).to receive(:puts).with("1 = list all shop items").ordered
+        expect(io).to receive(:puts).with("2 = create a new item").ordered
+        expect(io).to receive(:puts).with("3 = list all orders").ordered
+        expect(io).to receive(:puts).with("4 = create a new order").ordered
+        expect(io).to receive(:puts).with("5 = exit").ordered
     end
+
+    it 'lists all inventory items' do
+        print_menu
+        expect(io).to receive(:gets).and_return("1").ordered
+        expect(io).to receive(:puts).with("Here's a list of all shop inventory:").ordered
+        expect(io).to receive(:puts).with("#1 printer - unit price: 60 - quantity: 8").ordered
+        expect(io).to receive(:puts).with("#2 mouse - unit price: 30 - quantity: 12").ordered
+        app.run
+      end
+      
 end

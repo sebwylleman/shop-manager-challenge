@@ -17,46 +17,64 @@ class Application
   end
 
   def print_menu
-    puts "Welcome to the shop management program!"
-    puts # blank line for better readability
-    puts "What do you want to do?"
-    puts "1 = list all shop items"
-    puts "2 = create a new item"
-    puts "3 = list all orders"
-    puts "4 = create a new order"
-    puts "5 = exit"
+    @io.puts "Welcome to the shop management program!"
+    @io.puts "Enter your choice: "
+    @io.puts "1 = list all shop items"
+    @io.puts "2 = create a new item"
+    @io.puts "3 = list all orders"
+    @io.puts "4 = create a new order"
+    @io.puts "5 = exit"
   end
 
-  def process(selection)
-     # Use `@io.puts` or `@io.gets` to
-    # write output and ask for user input.
-    puts "Enter your choice: "
-    case selection
+  def selection(choice)
+    case choice
     when '1'
-      puts "Here's a list of all shop items:"
+      print_inventory
     when '2'
-
+      create_item
     when '3'
 
     when '4'
 
     when '5'
-      exit
+      @io.exit
     else
-      puts "I don't know what you meant, try again"
+      @io.puts "I don't know what you meant, try again"
     end
   end
 
   def run
     loop do
       print_menu
-      process(STDIN.gets.chomp)
+      selection(@io.gets.chomp)
+      @io.puts '------------------------------------------------'
     end
-
-    puts 'Welcome to the shop management program!'
   end
 end
 
+def print_inventory
+  @io.puts "Here's a list of all shop inventory:"
+  i = 1
+  @inventory_repository.all.each do |entry|
+    @io.puts "##{i} #{entry.item} - unit price: #{entry.price} - quantity: #{entry.quantity}"
+    i += 1
+  end
+end
+
+def create_item
+  new_item = Inventory.new
+  @io.puts 'Enter item name: '
+  name = @io.gets.chomp
+  new_item.item = name
+  @io.puts 'Enter price integer: '
+  price = @io.gets.chomp
+  new_item.price = price
+  @io.puts 'Enter item quantity integer: '
+  quantity = @io.gets.chomp
+  new_item.quantity = quantity
+  @inventory_repository.create(new_item)
+  @io.puts 'Item added'
+end
 # Don't worry too much about this if statement. It is basically saying "only
 # run the following code if this is the main file being run, instead of having
 # been required or loaded by another file.
