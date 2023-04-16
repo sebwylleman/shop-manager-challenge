@@ -46,13 +46,38 @@ RSpec.describe Application do
   end
 
 
-  describe '#print_inventory' do
-    it 'lists all inventory items' do
-      expect(io).to receive(:puts).with("Here's a list of all shop inventory:").ordered
-      expect(io).to receive(:puts).with("#1 printer - unit price: 60 - quantity: 8").ordered
-      expect(io).to receive(:puts).with("#2 mouse - unit price: 30 - quantity: 12").ordered
-      app.print_inventory
-    end
+  
+  it 'lists all inventory items' do
+    expect(io).to receive(:puts).with("Here's a list of all shop inventory:").ordered
+    expect(io).to receive(:puts).with("#1 printer - unit price: 60 - quantity: 8").ordered
+    expect(io).to receive(:puts).with("#2 mouse - unit price: 30 - quantity: 12").ordered
+    app.print_inventory
+  end
+  
+  it 'creates a new inventory item' do
+    expect(io).to receive(:puts).with('Enter item name:').ordered
+    expect(io).to receive(:gets).and_return('clock').ordered
+    expect(io).to receive(:puts).with('Enter price:').ordered
+    expect(io).to receive(:gets).and_return('23').ordered
+    expect(io).to receive(:puts).with('Enter item quantity:').ordered
+    expect(io).to receive(:gets).and_return('8').ordered
+    expect(io).to receive(:puts).with('Item added').ordered
+    app.create_item
   end
       
+  it 'lists all orders' do
+    expect(io).to receive(:puts).with('Orders:').ordered
+    expect(io).to receive(:puts).with("customer: John Smith - date: 2023-04-14").ordered
+    expect(io).to receive(:puts).with("customer: Tim Cook - date: 2023-05-22").ordered
+    app.list_orders
+  end
+
+  it 'creates a new inventory item' do
+    expect(io).to receive(:puts).with('Enter customer name:').ordered
+    expect(io).to receive(:gets).and_return('Ben Hamilton').ordered
+    expect(io).to receive(:puts).with('Enter date of order:').ordered
+    expect(io).to receive(:gets).and_return('2023-11-29').ordered
+    expect(io).to receive(:puts).with('Order created').ordered
+    app.create_order
+  end
 end

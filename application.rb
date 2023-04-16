@@ -61,13 +61,13 @@ class Application
 
   def create_item
     new_item = Inventory.new
-    @io.puts 'Enter item name: '
+    @io.puts 'Enter item name:'
     name = @io.gets.chomp
     new_item.item = name
-    @io.puts 'Enter price as an integer: '
+    @io.puts 'Enter price:'
     price = @io.gets.chomp
     new_item.price = price
-    @io.puts 'Enter item quantity as an integer: '
+    @io.puts 'Enter item quantity:'
     quantity = @io.gets.chomp
     new_item.quantity = quantity
     @inventory_repository.create(new_item)
@@ -75,7 +75,7 @@ class Application
   end
 
   def list_orders
-    @io.puts 'Orders: '
+    @io.puts 'Orders:'
     orders = OrderRepository.new.all
     orders.each do |order|
       @io.puts "customer: #{order.customer} - date: #{order.date}"
