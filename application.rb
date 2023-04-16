@@ -36,7 +36,7 @@ class Application
     when '4'
       create_order
     when '5'
-      @io.exit
+      exit
     else
       @io.puts "I don't know what you meant, try again"
     end
@@ -49,51 +49,50 @@ class Application
       @io.puts '------------------------------------------------'
     end
   end
-end
 
-def print_inventory
-  @io.puts "Here's a list of all shop inventory:"
-  i = 1
-  @inventory_repository.all.each do |entry|
-    @io.puts "##{i} #{entry.item} - unit price: #{entry.price} - quantity: #{entry.quantity}"
-    i += 1
+  def print_inventory
+    @io.puts "Here's a list of all shop inventory:"
+    i = 1
+    @inventory_repository.all.each do |entry|
+      @io.puts "##{i} #{entry.item} - unit price: #{entry.price} - quantity: #{entry.quantity}"
+      i += 1
+    end
+  end
+
+  def create_item
+    new_item = Inventory.new
+    @io.puts 'Enter item name: '
+    name = @io.gets.chomp
+    new_item.item = name
+    @io.puts 'Enter price as an integer: '
+    price = @io.gets.chomp
+    new_item.price = price
+    @io.puts 'Enter item quantity as an integer: '
+    quantity = @io.gets.chomp
+    new_item.quantity = quantity
+    @inventory_repository.create(new_item)
+    @io.puts 'Item added'
+  end
+
+  def list_orders
+    @io.puts 'Orders: '
+    orders = OrderRepository.new.all
+    orders.each do |order|
+      @io.puts "customer: #{order.customer} - date: #{order.date}"
+    end
+  end
+
+  def create_order
+    new_order = Order.new
+    @io.puts 'Enter customer name:'
+    customer = @io.gets.chomp
+    new_order.customer = customer
+    @io.puts 'Enter date of order:'
+    new_order.date = @io.gets.chomp
+    OrderRepository.new.create(new_order)
+    @io.puts 'Order created'
   end
 end
-
-def create_item
-  new_item = Inventory.new
-  @io.puts 'Enter item name: '
-  name = @io.gets.chomp
-  new_item.item = name
-  @io.puts 'Enter price as an integer: '
-  price = @io.gets.chomp
-  new_item.price = price
-  @io.puts 'Enter item quantity as an integer: '
-  quantity = @io.gets.chomp
-  new_item.quantity = quantity
-  @inventory_repository.create(new_item)
-  @io.puts 'Item added'
-end
-
-def list_orders
-  @io.puts 'Orders: '
-  orders = OrderRepository.new.all
-  orders.each do |order|
-    @io.puts "customer: #{order.customer} - date: #{order.date}"
-  end
-end
-
-def create_order
-  new_order = Order.new
-  @io.puts 'Enter customer name:'
-  customer = @io.gets.chomp
-  new_order.customer = customer
-  @io.puts 'Enter date of order:'
-  new_order.date = @io.gets.chomp
-  OrderRepository.new.create(new_order)
-  @io.puts 'Order created'
-end
-
 # Don't worry too much about this if statement. It is basically saying "only
 # run the following code if this is the main file being run, instead of having
 # been required or loaded by another file.
