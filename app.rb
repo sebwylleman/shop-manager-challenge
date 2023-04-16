@@ -2,7 +2,6 @@ require_relative './lib/order_repository'
 require_relative './lib/inventory_repository'
 
 class Application
-
   # The Application class initializer
   # takes four arguments:
   #  * The database name to call `DatabaseConnection.connect`

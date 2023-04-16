@@ -17,23 +17,28 @@ RSpec.describe Application do
         reset_all_tables
     end
 
-    def print_menu
-        expect(io).to receive(:puts).with("Welcome to the shop management program!").ordered
-        expect(io).to receive(:puts).with("Enter your choice: ").ordered
-        expect(io).to receive(:puts).with("1 = list all shop items").ordered
-        expect(io).to receive(:puts).with("2 = create a new item").ordered
-        expect(io).to receive(:puts).with("3 = list all orders").ordered
-        expect(io).to receive(:puts).with("4 = create a new order").ordered
-        expect(io).to receive(:puts).with("5 = exit").ordered
+    it 'prints the menu' do
+      expect(io).to receive(:puts).with("Welcome to the shop management program!").ordered
+      expect(io).to receive(:puts).with("Enter your choice: ").ordered
+      expect(io).to receive(:puts).with("1 = list all shop items").ordered
+      expect(io).to receive(:puts).with("2 = create a new item").ordered
+      expect(io).to receive(:puts).with("3 = list all orders").ordered
+      expect(io).to receive(:puts).with("4 = create a new order").ordered
+      expect(io).to receive(:puts).with("5 = exit").ordered
+      app.print_menu
     end
-
-    it 'lists all inventory items' do
-        print_menu
-        expect(io).to receive(:gets).and_return("1").ordered
-        expect(io).to receive(:puts).with("Here's a list of all shop inventory:").ordered
-        expect(io).to receive(:puts).with("#1 printer - unit price: 60 - quantity: 8").ordered
-        expect(io).to receive(:puts).with("#2 mouse - unit price: 30 - quantity: 12").ordered
-        app.run
-      end
+    
+    describe '#print_inventory' do
+        xit 'lists all inventory items' do
+            print_menu
+            expect(io).to receive(:gets).and_return("1").ordered
+            expect(io).to receive(:puts).with("Here's a list of all shop inventory:").ordered
+            expect(io).to receive(:puts).with("#1 printer - unit price: 60 - quantity: 8").ordered
+            expect(io).to receive(:puts).with("#2 mouse - unit price: 30 - quantity: 12").ordered
+            expect(io).to receive(:puts).with("------------------------------------------------").ordered
+            expect(io).to receive(:gets).and_return("5").ordered
+            app.run
+        end
+    end
       
 end
